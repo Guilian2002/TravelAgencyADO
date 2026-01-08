@@ -1,0 +1,91 @@
+﻿@model TravelAgencyADO.ASPCore.Models.TravelAgency.ActivityViewModel
+
+@{
+    ViewData["Title"] = "Nouvelle Activité";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <!-- Carte principale -->
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0 text-center fw-bold">✨ Créer une Activité</h4>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 py-2 small"></div>
+
+                        <!-- Titre -->
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label fw-semibold text-secondary">Nom de l'activité</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 text-muted">🏷️</span>
+                                <input asp-for="Title" class="form-control border-start-0 ps-0" placeholder="ex: Plongée sous-marine" />
+                            </div>
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Prix -->
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label fw-semibold text-secondary">Tarif</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 text-muted">€</span>
+                                <input asp-for="Price" class="form-control border-start-0 ps-0" placeholder="0.00" type="number" step="0.01" />
+                            </div>
+                            <span asp-validation-for="Price" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label fw-semibold text-secondary">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Décrivez l'expérience..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <input type="hidden" asp-for="DestinationId" />
+
+                        <!-- Actions -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm rounded-pill fw-bold">
+                                Enregistrer l'activité
+                            </button>
+                            <a asp-action="Index" class="btn btn-link btn-sm text-decoration-none text-muted mt-2">
+                                ⬅ Retour à la liste
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Petit effet de focus élégant */
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+    }
+    
+    .card {
+        background-color: #ffffff;
+    }
+
+    body {
+        background-color: #f8f9fa; /* Fond de page léger */
+    }
+    
+    .input-group-text {
+        border-radius: 8px 0 0 8px;
+    }
+    
+    .form-control {
+        border-radius: 0 8px 8px 0;
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,111 @@
+﻿@model TravelAgencyADO.ASPCore.Models.TravelAgency.BookingCreateViewModel
+
+@{
+    ViewData["Title"] = "Nouvelle Réservation";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="card bg-light mb-4">
+        <div class="card-body">
+            <form asp-action="Create" method="get" class="row align-items-end">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Étape 1 : Choisir une destination</label>
+                    <select asp-for="SelectedCountry" class="form-select"
+                            asp-items="@(new SelectList(Model.AvailableCountries))">
+                        <option value="">-- Sélectionnez un pays --</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-secondary w-100">
+                        <i class="bi bi-funnel"></i> Filtrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <form asp-action="Create" method="post">
+        <input type="hidden" asp-for="SelectedCountry" />
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label asp-for="ClientName" class="form-label fw-bold"></label>
+                <input asp-for="ClientName" class="form-control" placeholder="Nom complet du client" />
+                <span asp-validation-for="ClientName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="BookingDate" class="form-label fw-bold"></label>
+                <input asp-for="BookingDate" type="date" class="form-control" />
+                <span asp-validation-for="BookingDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <h4 class="mb-3">Étape 2 : Sélectionner les activités</h4>
+
+        @if (string.IsNullOrEmpty(Model.SelectedCountry))
+        {
+            <div class="alert alert-info border-0 shadow-sm">
+                <i class="bi bi-info-circle me-2"></i>
+                Veuillez d'abord sélectionner une destination ci-dessus pour afficher les activités disponibles.
+            </div>
+        }
+        else if (!Model.AvailableActivities.Any())
+        {
+            <div class="alert alert-warning">
+                Aucune activité n'est disponible pour la destination : <strong>@Model.SelectedCountry</strong>.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive shadow-sm">
+                <table class="table table-hover align-middle border">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width: 80px;" class="text-center">Choisir</th>
+                            <th>Ville</th>
+                            <th>Activité</th>
+                            <th class="text-end">Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.AvailableActivities)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox"
+                                           name="SelectedActivityIds"
+                                           value="@item.ActivityId"
+                                           class="form-check-input"
+                                    @(Model.SelectedActivityIds.Contains(item.ActivityId) ? "checked" : "") />
+                                </td>
+                                <td>@item.City</td>
+                                <td><strong>@item.Title</strong></td>
+                                <td class="text-end fw-bold">@item.Price.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-danger mb-3">
+                @Html.ValidationSummary(true, "")
+            </div>
+        }
+
+        <div class="mt-5 border-top pt-3">
+            <button type="submit" class="btn btn-primary btn-lg @(string.IsNullOrEmpty(Model.SelectedCountry) ? "disabled" : "")">
+                Confirmer la réservation
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg ms-2">Annuler</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

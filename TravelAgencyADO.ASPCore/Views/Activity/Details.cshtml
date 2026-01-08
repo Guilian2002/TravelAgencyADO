@@ -1,0 +1,108 @@
+﻿@model TravelAgencyADO.ASPCore.Models.TravelAgency.ActivityViewModel
+
+@{
+    ViewData["Title"] = "Détails de l'activité";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- En-tête avec bouton retour -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold text-dark m-0">Aperçu de l'activité</h2>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                    ← Retour à la liste
+                </a>
+            </div>
+
+            <!-- Carte de détails -->
+            <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 20px;">
+                <!-- Bannière décorative (Couleur unie ou dégradé) -->
+                <div class="bg-primary bg-gradient p-5 text-white">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <span class="badge bg-white text-primary mb-2 px-3 py-2 rounded-pill fw-bold">ACTIVITÉ</span>
+                            <h1 class="display-5 fw-bold">@Html.DisplayFor(model => model.Title)</h1>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <div class="bg-white text-dark d-inline-block p-3 rounded-4 shadow-sm">
+                                <span class="d-block small text-muted text-uppercase fw-bold">Tarif</span>
+                                <span class="h3 fw-bold m-0">@Html.DisplayFor(model => model.Price) €</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corps de la fiche -->
+                <div class="card-body p-4 p-md-5">
+                    <div class="row g-4">
+                        <!-- Colonne Principale -->
+                        <div class="col-md-8">
+                            <h5 class="fw-bold mb-3">Description</h5>
+                            <p class="text-muted lh-lg" style="font-size: 1.1rem;">
+                                @if (string.IsNullOrEmpty(Model.Description))
+                                {
+                                    <span class="fst-italic text-secondary">Aucune description disponible pour le moment.</span>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.Description)
+                                }
+                            </p>
+                        </div>
+
+                        <!-- Barre latérale d'infos -->
+                        <div class="col-md-4">
+                            <div class="p-4 bg-light rounded-4 border-0">
+                                <h6 class="fw-bold mb-3 text-uppercase small text-secondary">Informations clés</h6>
+
+                                <div class="mb-3 d-flex align-items-center">
+                                    <div class="bg-white p-2 rounded-3 shadow-sm me-3">📍</div>
+                                    <div>
+                                        <small class="text-muted d-block">ID Destination</small>
+                                        <span class="fw-bold">#@Html.DisplayFor(model => model.DestinationId)</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-0 d-flex align-items-center">
+                                    <div class="bg-white p-2 rounded-3 shadow-sm me-3">💳</div>
+                                    <div>
+                                        <small class="text-muted d-block">Paiement</small>
+                                        <span class="fw-bold">Accepté en ligne</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 d-grid">
+                                <a href="#" class="btn btn-dark btn-lg rounded-3 fw-bold disabled">Modifier (Admin)</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer discret -->
+            <p class="text-center text-muted mt-4 small">ID de l'activité : @Model.GetHashCode() • Travel Agency 2025</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, #0d6efd, #0099ff);
+    }
+
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+</style>

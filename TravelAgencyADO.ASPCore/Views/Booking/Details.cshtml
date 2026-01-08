@@ -1,0 +1,84 @@
+﻿@model TravelAgencyADO.ASPCore.Models.TravelAgency.BookingDetailsViewModel
+
+@{
+    ViewData["Title"] = "Détails de la Réservation";
+}
+
+<h1>Détails du Booking</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4>Informations Client</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Nom :</strong> @Model.Booking.ClientName</p>
+                    <p><strong>Date :</strong> @Model.Booking.BookingDate?.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4>Destination</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.Destination != null)
+                    {
+                        <p><strong>Ville :</strong> @Model.Destination.City</p>
+                        <p><strong>Pays :</strong> @Model.Destination.Country</p>
+                        <p><strong>Description :</strong> @Model.Destination.Description</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Aucune destination associée.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4>Activités réservées</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Description</th>
+                                <th>Prix</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var activity in Model.Activities)
+                            {
+                                <tr>
+                                    <td>@activity.Title</td>
+                                    <td>@activity.Description</td>
+                                    <td>@activity.Price.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="text-end"><strong>Total :</strong></td>
+                                <td><strong>@Model.Activities.Sum(a => a.Price).ToString("C")</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+</div>
