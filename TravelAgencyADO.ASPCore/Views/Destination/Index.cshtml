@@ -40,7 +40,7 @@
                @*  @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) | *@
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) @* |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) *@
-                <a class="text-dark" asp-area="" asp-controller="Activity" asp-action="Index" asp-route-descriptionId="@item.Id">See Activities link to it</a>
+                <a class="text-dark" asp-area="" asp-controller="Activity" asp-action="Index" asp-route-destinationId="@item.Id">See Activities link to it</a>
             </td>
         </tr>
 }

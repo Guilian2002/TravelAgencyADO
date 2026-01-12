@@ -14,7 +14,7 @@ namespace TravelAgencyADO.API.Controllers
         public ActivitiesController(IActivityService service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetAll(Guid destinationId)
+        public IActionResult GetAll([FromQuery] Guid destinationId)
         {
             return Ok(_service.GetAll(destinationId));
         }

@@ -21,6 +21,7 @@ namespace TravelAgencyADO.ASPCore.Controllers.TravelAgency
             try
             {
                 var activities = await _agency.GetAllActivitiesAsync(destinationId);
+                ViewBag.DestinationId = destinationId;
                 return View(activities);
             }
             catch(Exception)
